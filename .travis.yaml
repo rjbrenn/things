@@ -1,4 +1,0 @@
-language: bash
-os: linux
-sudo: false
-script: docker pull debian && docker run debian date

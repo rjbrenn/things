@@ -1,5 +1,5 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: run sanity check
+run-name: ${{ github.actor }} did push so lets sanity check
 on: [push]
 jobs:
   check-bats-version:
@@ -9,5 +9,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
+      - run: cd zvm_ansible_collection
+      - run: ansible-galaxy build ibm/zvm_ansible
+      - run: ansible-galaxy install ./ibm-zvm_ansible*.tar.gz
+      - run: cd ~/.ansible/collections/ansible_collections/ibm/zvm_ansible
+      - run: ansible-test sanity --requirements
