@@ -2,14 +2,12 @@ name: run sanity check
 run-name: ${{ github.actor }} did push so lets sanity check
 on: [push]
 jobs:
-  check-bats-version:
+  sanity-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: cd zvm_ansible_collection
+      - uses: actions/checkout@v4
+      - run: ls $GITHUB_WORKSPACE
+      - run: find $GITHUB_WORKSPACE
       - run: ansible-galaxy build ibm/zvm_ansible
       - run: ansible-galaxy install ./ibm-zvm_ansible*.tar.gz
       - run: cd ~/.ansible/collections/ansible_collections/ibm/zvm_ansible
